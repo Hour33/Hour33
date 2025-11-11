@@ -38,6 +38,7 @@
       border-radius: 8px;
       font-weight: bold;
       cursor: pointer;
+      margin-top: 10px;
     }
     a { color: #b3e5fc; text-decoration: none; }
     #msg { margin-top: 10px; font-size: 14px; }
@@ -46,9 +47,10 @@
 <body>
   <div class="card">
     <h2>Register</h2>
-     <input id="phone" type="text" placeholder="Account" />
-  <input id="password" type="password" placeholder="Password" />
-  <input id="confirmPassword" type="password" placeholder="Confirm Password" />
+    <input id="phone" type="text" placeholder="Account" />
+    <input id="password" type="password" placeholder="Password" />
+    <input id="confirmPassword" type="password" placeholder="Confirm Password" />
+    <button id="registerBtn">Register</button>
     <p>Already have an account? <a href="login.html">Login</a></p>
     <div id="msg"></div>
   </div>
@@ -59,18 +61,30 @@
     document.getElementById('registerBtn').addEventListener('click', async () => {
       const phone = document.getElementById('phone').value.trim();
       const password = document.getElementById('password').value.trim();
+      const confirmPassword = document.getElementById('confirmPassword').value.trim();
       const msg = document.getElementById('msg');
-      if (!phone || !password) {
-        msg.textContent = "Please fill both fields";
+
+      if (!phone || !password || !confirmPassword) {
+        msg.style.color = "red";
+        msg.textContent = "Please fill all fields";
         return;
       }
+
+      if (password !== confirmPassword) {
+        msg.style.color = "red";
+        msg.textContent = "Passwords do not match";
+        return;
+      }
+
+      msg.style.color = "white";
       msg.textContent = "Registering...";
+
       try {
         const res = await fetch(SHEETY_URL, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            usersdb3: {  // ✅ lowercase version (this fixes the Bad Request)
+            usersdb3: {  
               phone,
               password,
               balance: 200
@@ -79,6 +93,7 @@
         });
         const text = await res.text();
         if (!res.ok) {
+          msg.style.color = "red";
           msg.textContent = "Error: " + text;
           return;
         }
@@ -86,6 +101,7 @@
         msg.textContent = "Registered successfully! Redirecting...";
         setTimeout(() => location.href = "login.html", 1000);
       } catch (err) {
+        msg.style.color = "red";
         msg.textContent = "Network error: " + err.message;
       }
     });
