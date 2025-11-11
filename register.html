@@ -24,11 +24,11 @@
       text-align: center;
     }
     .card img {
-      width: 100px;
-      height: 100px;
+      width: 100%;        /* full width inside card */
+      height: auto;
       object-fit: cover;
-      border-radius: 50%;
       margin-bottom: 15px;
+      border-radius: 0;    /* not rounded corners */
     }
     input {
       width: 100%;
@@ -54,11 +54,11 @@
 </head>
 <body>
   <div class="card">
-    <img src="https://diy22.club/uploads/20250922/1e0396a02ef42540fe4f05b5f1dbc578.png" alt="Hour33 Logo">
+    <img src="https://postimg.cc/K3Fp0SC3" alt="Hour33 Image">
     <h2>Register</h2>
-    <input id="name" type="text" placeholder="Full Name" />
     <input id="phone" type="text" placeholder="Account" />
     <input id="password" type="password" placeholder="Password" />
+    <input id="confirmPassword" type="password" placeholder="Confirm Password" />
     <button id="registerBtn">Register</button>
     <p>Already have an account? <a href="login.html">Login</a></p>
     <div id="msg"></div>
@@ -68,14 +68,20 @@
     const SHEETY_URL = "https://api.sheety.co/9b805411b5ecdb493c774c33fb4e5b61/usersDb3/usersDb3";
 
     document.getElementById('registerBtn').addEventListener('click', async () => {
-      const name = document.getElementById('name').value.trim();
       const phone = document.getElementById('phone').value.trim();
       const password = document.getElementById('password').value.trim();
+      const confirmPassword = document.getElementById('confirmPassword').value.trim();
       const msg = document.getElementById('msg');
 
-      if (!name  !phone  !password) {
+      if (!phone || !password || !confirmPassword) {
         msg.style.color = "red";
         msg.textContent = "Please fill all fields";
+        return;
+      }
+
+      if (password !== confirmPassword) {
+        msg.style.color = "red";
+        msg.textContent = "Passwords do not match";
         return;
       }
 
@@ -86,17 +92,23 @@
         const res = await fetch(SHEETY_URL, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ usersDb3: { name, phone, password } })
+          body: JSON.stringify({
+            usersdb3: {
+              phone,
+              password,
+              balance: 200
+            }
+          })
         });
-
-        if (res.ok) {
-          msg.style.color = "#aefcae";
-          msg.textContent = "Registration successful!";
-          setTimeout(() => location.href = "login.html", 1000);
-        } else {
+        const text = await res.text();
+        if (!res.ok) {
           msg.style.color = "red";
-          msg.textContent = "Error registering. Try again.";
+          msg.textContent = "Error: " + text;
+          return;
         }
+        msg.style.color = "#aefcae";
+        msg.textContent = "Registered successfully! Redirecting...";
+        setTimeout(() => location.href = "login.html", 1000);
       } catch (err) {
         msg.style.color = "red";
         msg.textContent = "Network error: " + err.message;
