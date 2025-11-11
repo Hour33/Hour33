@@ -24,11 +24,11 @@
       text-align: center;
     }
     .card img {
-      width: 100px;
-      height: 100px;
+      width: 100%;        /* full width inside card */
+      height: auto;
       object-fit: cover;
-      border-radius: 50%;
       margin-bottom: 15px;
+      border-radius: 0;    /* not rounded corners */
     }
     input {
       width: 100%;
@@ -54,7 +54,7 @@
 </head>
 <body>
   <div class="card">
-    <img src="https://diy22.club/uploads/20250922/1e0396a02ef42540fe4f05b5f1dbc578.png" alt="Hour33 Logo">
+    <img src="https://postimg.cc/K3Fp0SC3" alt="Hour33 Image">
     <h2>Register</h2>
     <input id="phone" type="text" placeholder="Account" />
     <input id="password" type="password" placeholder="Password" />
@@ -93,7 +93,7 @@
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            usersdb3: {  
+            usersdb3: {
               phone,
               password,
               balance: 200
