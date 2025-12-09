@@ -7,39 +7,48 @@
   <style>
     body {
       font-family: Arial, sans-serif;
-      background: linear-gradient(135deg, #1e3c72, #2a5298);
-      color: white;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
+      background: #ffffff; /* full white page */
       margin: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
-    .card {
-      background: rgba(255, 255, 255, 0.1);
-      padding: 25px;
-      border-radius: 15px;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-      width: 350px;
-      text-align: center;
+    .banner {
+      width: 100%;
+      max-width: 500px;
+      margin-top: 20px;
     }
-    .card img {
+    .banner img {
       width: 100%;
       height: auto;
-      object-fit: cover;
-      margin-bottom: 15px;
-      border-radius: 0;
+      display: block;
+      border-radius: 10px;
+    }
+    .card {
+      background: #ffffff;
+      padding: 25px;
+      border-radius: 20px 20px 10px 10px; /* rounded top */
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      width: 90%;
+      max-width: 400px;
+      margin-top: -20px; /* overlap banner slightly */
+      text-align: center;
+    }
+    .card h2 {
+      margin-bottom: 20px;
+      color: #222222;
     }
     input {
       width: 100%;
-      padding: 10px;
+      padding: 12px;
       margin: 10px 0;
       border-radius: 8px;
-      border: none;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
     }
     button {
       width: 100%;
-      padding: 10px;
+      padding: 12px;
       background: #4caf50;
       color: white;
       border: none;
@@ -48,16 +57,22 @@
       cursor: pointer;
       margin-top: 10px;
     }
-    a { color: #b3e5fc; text-decoration: none; }
+    a { color: #1e88e5; text-decoration: none; }
     #msg { margin-top: 10px; font-size: 14px; }
+    @media(max-width: 400px){
+      .card { padding: 20px; }
+    }
   </style>
 </head>
 <body>
-  <div class="card">
 
-    <!-- FIXED IMAGE -->
+  <!-- Banner Image -->
+  <div class="banner">
     <img src="https://i.postimg.cc/59KZmBNz/IMG-20251209-184828.jpg" alt="Hour33 Banner">
+  </div>
 
+  <!-- White Form Card -->
+  <div class="card">
     <h2>Register</h2>
 
     <input id="phone" type="text" placeholder="Account" />
@@ -92,7 +107,7 @@
         return;
       }
 
-      msg.style.color = "white";
+      msg.style.color = "#222";
       msg.textContent = "Registering...";
 
       try {
@@ -116,7 +131,7 @@
           return;
         }
 
-        msg.style.color = "#aefcae";
+        msg.style.color = "#4caf50";
         msg.textContent = "Registered successfully! Redirecting...";
         setTimeout(() => location.href = "login.html", 1000);
 
