@@ -24,11 +24,11 @@
       text-align: center;
     }
     .card img {
-      width: 100%;        /* full width inside card */
+      width: 100%;
       height: auto;
       object-fit: cover;
       margin-bottom: 15px;
-      border-radius: 0;    /* not rounded corners */
+      border-radius: 0;
     }
     input {
       width: 100%;
@@ -54,13 +54,20 @@
 </head>
 <body>
   <div class="card">
-    <img src="https://postimg.cc/K3Fp0SC3" alt="Hour33 Image">
+
+    <!-- FIXED IMAGE -->
+    <img src="https://i.postimg.cc/59KZmBNz/IMG-20251209-184828.jpg" alt="Hour33 Banner">
+
     <h2>Register</h2>
+
     <input id="phone" type="text" placeholder="Account" />
     <input id="password" type="password" placeholder="Password" />
     <input id="confirmPassword" type="password" placeholder="Confirm Password" />
+
     <button id="registerBtn">Register</button>
+
     <p>Already have an account? <a href="login.html">Login</a></p>
+
     <div id="msg"></div>
   </div>
 
@@ -100,15 +107,19 @@
             }
           })
         });
+
         const text = await res.text();
+
         if (!res.ok) {
           msg.style.color = "red";
           msg.textContent = "Error: " + text;
           return;
         }
+
         msg.style.color = "#aefcae";
         msg.textContent = "Registered successfully! Redirecting...";
         setTimeout(() => location.href = "login.html", 1000);
+
       } catch (err) {
         msg.style.color = "red";
         msg.textContent = "Network error: " + err.message;
