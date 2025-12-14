@@ -66,12 +66,10 @@
 </head>
 <body>
 
-  <!-- Banner Image -->
   <div class="banner">
     <img src="https://i.postimg.cc/59KZmBNz/IMG-20251209-184828.jpg" alt="Hour33 Banner">
   </div>
 
-  <!-- White Form Card -->
   <div class="card">
     <h2>Register</h2>
 
@@ -87,9 +85,9 @@
   </div>
 
   <script>
-    /* ✅ CORRECT PROJECT NAME + SHEET NAME */
+    /* ✅ UPDATED SHEETY ENDPOINT */
     const SHEETY_URL =
-      "https://api.sheety.co/4a9868f3c5ce48f976e575a769b00f1c/usersDb6/usersdb6";
+      "https://api.sheety.co/4a9868f3c5ce48f976e575a769b00f1c/code/code";
 
     document.getElementById("registerBtn").onclick = async function () {
       const msg = document.getElementById("msg");
@@ -120,8 +118,8 @@
         try {
           const r = await fetch(SHEETY_URL);
           const j = await r.json();
-          if (j && Array.isArray(j.usersdb6)) {
-            users = j.usersdb6;
+          if (j && Array.isArray(j.code)) {
+            users = j.code;
           }
         } catch (e) {
           console.warn("Duplicate check skipped");
@@ -140,7 +138,7 @@
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            usersdb6: {
+            code: {
               phone: phone,
               password: password,
               balance: 200
