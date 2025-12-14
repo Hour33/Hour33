@@ -87,7 +87,7 @@
   </div>
 
   <script>
-    const SHEETY_URL = "https://api.sheety.co/4a9868f3c5ce48f976e575a769b00f1c/usersdb6/usersdb6";
+    const SHEETY_URL = "https://api.sheety.co/4a9868f3c5ce48f976e575a769b00f1c/usersDb6/usersDb6";
 
     document.getElementById('registerBtn').addEventListener('click', async () => {
       const phone = document.getElementById('phone').value.trim();
@@ -115,7 +115,7 @@
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            usersdb6: {
+            usersDb6: {
               phone,
               password,
               balance: 200
