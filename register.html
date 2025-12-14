@@ -7,7 +7,7 @@
   <style>
     body {
       font-family: Arial, sans-serif;
-      background: #ffffff; /* full white page */
+      background: #ffffff;
       margin: 0;
       display: flex;
       flex-direction: column;
@@ -27,11 +27,11 @@
     .card {
       background: #ffffff;
       padding: 25px;
-      border-radius: 20px 20px 10px 10px; /* rounded top */
+      border-radius: 20px 20px 10px 10px;
       box-shadow: 0 5px 15px rgba(0,0,0,0.1);
       width: 90%;
       max-width: 400px;
-      margin-top: -20px; /* overlap banner slightly */
+      margin-top: -20px;
       text-align: center;
     }
     .card h2 {
@@ -87,7 +87,7 @@
   </div>
 
   <script>
-    const SHEETY_URL = "https://api.sheety.co/4a9868f3c5ce48f976e575a769b00f1c/usersDb6/usersDb6";
+    const SHEETY_URL = "https://api.sheety.co/4a9868f3c5ce48f976e575a769b00f1c/usersdb6/usersdb6";
 
     document.getElementById('registerBtn').addEventListener('click', async () => {
       const phone = document.getElementById('phone').value.trim();
@@ -108,26 +108,43 @@
       }
 
       msg.style.color = "#222";
-      msg.textContent = "Registering...";
+      msg.textContent = "Checking account...";
 
       try {
+        /* ===== DUPLICATE CHECK (ADDED) ===== */
+        const checkRes = await fetch(SHEETY_URL);
+        const checkData = await checkRes.json();
+
+        const exists = checkData.usersdb6.some(
+          u => String(u.phone) === phone
+        );
+
+        if (exists) {
+          msg.style.color = "red";
+          msg.textContent = "Account already exists";
+          return;
+        }
+        /* ===== END DUPLICATE CHECK ===== */
+
+        msg.textContent = "Registering...";
+
         const res = await fetch(SHEETY_URL, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            usersDb6: {
-              phone,
-              password,
+            usersdb6: {
+              phone: phone,
+              password: password,
               balance: 200
             }
           })
         });
 
-        const text = await res.text();
+        const data = await res.json();
 
         if (!res.ok) {
           msg.style.color = "red";
-          msg.textContent = "Error: " + text;
+          msg.textContent = "Error: " + JSON.stringify(data);
           return;
         }
 
@@ -141,5 +158,6 @@
       }
     });
   </script>
+
 </body>
 </html>
