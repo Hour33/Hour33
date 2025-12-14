@@ -66,10 +66,12 @@
 </head>
 <body>
 
+  <!-- Banner Image -->
   <div class="banner">
     <img src="https://i.postimg.cc/59KZmBNz/IMG-20251209-184828.jpg" alt="Hour33 Banner">
   </div>
 
+  <!-- White Form Card -->
   <div class="card">
     <h2>Register</h2>
 
@@ -85,7 +87,9 @@
   </div>
 
   <script>
-    const SHEETY_URL = "https://api.sheety.co/4a9868f3c5ce48f976e575a769b00f1c/usersdb6/usersdb6";
+    /* ✅ CORRECT PROJECT NAME + SHEET NAME */
+    const SHEETY_URL =
+      "https://api.sheety.co/4a9868f3c5ce48f976e575a769b00f1c/usersDb6/usersdb6";
 
     document.getElementById("registerBtn").onclick = async function () {
       const msg = document.getElementById("msg");
@@ -111,7 +115,7 @@
         msg.style.color = "#222";
         msg.textContent = "Checking account...";
 
-        /* SAFE GET */
+        /* ===== SAFE DUPLICATE CHECK ===== */
         let users = [];
         try {
           const r = await fetch(SHEETY_URL);
@@ -120,7 +124,7 @@
             users = j.usersdb6;
           }
         } catch (e) {
-          console.warn("Duplicate check skipped:", e);
+          console.warn("Duplicate check skipped");
         }
 
         if (users.some(u => String(u.phone) === phone)) {
@@ -128,6 +132,7 @@
           msg.textContent = "Account already exists";
           return;
         }
+        /* ===== END CHECK ===== */
 
         msg.textContent = "Registering...";
 
